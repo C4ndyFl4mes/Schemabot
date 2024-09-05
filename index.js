@@ -63,7 +63,7 @@ client.on('messageCreate', async (message) => {
                     dates.push(fulldate);
                     
                 }
-                let currentdate = new Date();
+                let currentdate = new Date(); //Tidpunkt nu.
                 let index = 0;
                 let text = "";
                 do{
