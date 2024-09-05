@@ -46,7 +46,6 @@ client.on('messageCreate', async (message) => {
                 * For-loopen går igenom varje rad i data-arrayen gör dem till strängar och 
                 * återskapar mellanslag och tar bort andra tecken.
                 * Därefter tar ut år, månad, dag, timmar och minuter.
-                *
                 */
                 const dates = [];
                 for (let i = 0; i < data.length; i++) {
