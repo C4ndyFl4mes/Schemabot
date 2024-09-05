@@ -48,6 +48,8 @@ client.on('messageCreate', async (message) => {
                 * Därefter tar ut år, månad, dag, timmar och minuter.
                 */
                 const dates = [];
+                const lessons = [];
+                const descriptions = [];
                 for (let i = 0; i < data.length; i++) {
                     let tmp = stringify(data[i]);
 
@@ -64,7 +66,20 @@ client.on('messageCreate', async (message) => {
                     
                     //Deklarerar schemats datum som Date-objekt och lägger in:
                     dates.push(new Date(year, month, day, hours, minutes)); 
+
+                    descriptions.push(tmp.split('Type=').pop().split('&')[0].replace('%C3%B6', "ö").replace('%C3%96', "Ö").replace('%C3%A4', 'ä'));
                     
+                    switch(tmp.split('Code=').pop().split('&')[0]){
+                        case "DT084G":
+                            lessons.push("JavaScript");
+                            break;
+                        case "DT057G":
+                            lessons.push("Webbutveckling 1");
+                            break;
+                        default:
+                            console.log("Error");
+                            break;
+                    }
                 }
                 /*
                 * currentdate är den exakta nupunkten.
@@ -76,13 +91,16 @@ client.on('messageCreate', async (message) => {
                 let currentdate = new Date();
                 let index = 0; 
                 let text = "";
+                let lesson = "";
+                let description = "";
                 do{
                     console.log(dates[index] + " " + currentdate);
                     text = Math.floor((dates[index]).getTime()/1000).toFixed(0); //<---------Översätter till unixtime.
-
+                    lesson = lessons[index];
+                    description = descriptions[index];
                 }while((currentdate.getTime() - dates[index++].getTime()) > 0);
 
-                message.reply("Nästa lektion är: "+ "<t:"+ text +">");
+                message.reply(`Nästa lektion är: <t:${text}>\n ${lesson}: ${description}`);
             });
 
     }
